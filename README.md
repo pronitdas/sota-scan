@@ -46,7 +46,11 @@ Every gap points to a real project that already does it. No vague advice. No flu
 
 ## Try it (2 min)
 
-It's an add-on for [Claude Code](https://claude.com/claude-code). Copy two files in:
+It's an add-on for [Claude Code](https://claude.com/claude-code) **or [OpenCode](https://opencode.ai)**. Pick your tool:
+
+### Claude Code
+
+Copy two files in:
 
 **Mac / Linux**
 ```bash
@@ -62,7 +66,23 @@ Copy-Item SKILL.md ~/.claude/skills/sota-scan/
 Copy-Item workflows/sota-scan-fanout.js ~/.claude/workflows/
 ```
 
-Open Claude Code in any project. Say:
+### OpenCode
+
+OpenCode has no Workflow runtime, so the port uses its own skill (`opencode/SKILL.md`) and runs the clustering as a real Node script (`cluster-cli.mjs`) instead of inlining it. Copy three files in:
+
+**Mac / Linux**
+```bash
+mkdir -p ~/.config/opencode/skills/sota-scan/lib
+cp opencode/SKILL.md   ~/.config/opencode/skills/sota-scan/SKILL.md
+cp cluster-cli.mjs     ~/.config/opencode/skills/sota-scan/
+cp lib/cluster.mjs     ~/.config/opencode/skills/sota-scan/lib/
+```
+
+The two non-exhaustive modes run identically to Claude Code. In `exhaustive` mode the port fans out one `Task` subagent per competitor and pipes their profiles through `cluster-cli.mjs` for deterministic peer-grouping and tier scoring. Requires Node and the `Task` tool; without them it falls back to a sequential inline scan and says so.
+
+---
+
+Open your tool in any project. Say:
 
 ```
 /sota-scan
@@ -105,7 +125,7 @@ Use it now and then — before a launch, a pitch, or when you're curious — not
 
 ## Good to know
 
-- Needs **Claude Code** with internet.
+- Needs **Claude Code** or **OpenCode** with internet.
 - It won't tell you to pivot. Just how to win at what you already do.
 - It scanned itself and came out top-tier. Proof in [`.sota/`](.sota/).
 
