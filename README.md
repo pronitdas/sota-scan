@@ -53,6 +53,7 @@ It's an add-on for [Claude Code](https://claude.com/claude-code) **or [OpenCode]
 Copy two files in:
 
 **Mac / Linux**
+
 ```bash
 mkdir -p ~/.claude/skills/sota-scan ~/.claude/workflows
 cp SKILL.md ~/.claude/skills/sota-scan/
@@ -60,6 +61,7 @@ cp workflows/sota-scan-fanout.js ~/.claude/workflows/
 ```
 
 **Windows**
+
 ```powershell
 New-Item -ItemType Directory -Force ~/.claude/skills/sota-scan, ~/.claude/workflows | Out-Null
 Copy-Item SKILL.md ~/.claude/skills/sota-scan/
@@ -90,8 +92,8 @@ Open your tool in any project. Say:
 
 Or just ask:
 
-- *"Is my project top-tier?"*
-- *"What am I missing vs the best?"*
+- _"Is my project top-tier?"_
+- _"What am I missing vs the best?"_
 
 Done. It does the rest.
 
@@ -99,10 +101,10 @@ Done. It does the rest.
 
 ## How deep?
 
-| Say | You get | For |
-|---|---|---|
-| `/sota-scan quick` | top 3 gaps | a fast check |
-| `/sota-scan` | full scorecard | everyday use |
+| Say                     | You get          | For                     |
+| ----------------------- | ---------------- | ----------------------- |
+| `/sota-scan quick`      | top 3 gaps       | a fast check            |
+| `/sota-scan`            | full scorecard   | everyday use            |
 | `/sota-scan exhaustive` | the deepest scan | launch / investor ready |
 
 **First time? Start with `quick`.** Cheap, fast taste. Go deeper once you like it.
@@ -113,13 +115,25 @@ Done. It does the rest.
 
 It does real research — reads a dozen competitor projects, not just summaries. So it's not instant or free:
 
-| Mode | Roughly |
-|---|---|
-| `quick` | ~80–150k tokens · a minute or two |
-| `standard` | ~150–350k tokens · a few minutes |
-| `exhaustive` | ~400k+ tokens · several minutes |
+| Mode         | Roughly                           |
+| ------------ | --------------------------------- |
+| `quick`      | ~80–150k tokens · a minute or two |
+| `standard`   | ~150–350k tokens · a few minutes  |
+| `exhaustive` | ~400k+ tokens · several minutes   |
 
 Use it now and then — before a launch, a pitch, or when you're curious — not on every commit. On a Claude plan it's bundled. Paying per token? Lean on `quick`.
+
+---
+
+## Share the result
+
+Every scan is saved to [`.sota/`](.sota/) so you can re-run it and track progress. Want a copy you can drop in a PR, an issue, or a doc? Export a standalone Markdown report:
+
+```bash
+node scripts/sota-report.mjs --report   # writes .sota/report.<domain>.md
+```
+
+You get a clean, self-contained file: summary + tier, the capability matrix, the high-confidence gaps, and a cited sources/disclosures trail. It's **deterministic** — the same scan always produces the same report — so `--check` flags a stale one, and no flag previews it to your terminal. See a real one: [`.sota/report.sota-benchmark-agent.md`](.sota/report.sota-benchmark-agent.md).
 
 ---
 
@@ -127,7 +141,7 @@ Use it now and then — before a launch, a pitch, or when you're curious — not
 
 - Needs **Claude Code** or **OpenCode** with internet.
 - It won't tell you to pivot. Just how to win at what you already do.
-- It scanned itself and came out top-tier. Proof in [`.sota/`](.sota/).
+- It scanned itself and came out top-tier — proof (and a [shareable report](.sota/report.sota-benchmark-agent.md)) in [`.sota/`](.sota/).
 
 ---
 
